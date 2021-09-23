@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur Covid Stats{% endblock %}
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-5">Les chiffres du COVID-19 en France</h1>
+    <div class="row text-center">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title ">Nombre d'hospitalisations</h5>
+                    <p class="card-text">Nombre de personnes actuellement hospitalisée</p>
+                    <div class="bg-warning w-75 rounded-pill mx-auto fw-bold fs-3">{{ datas.FranceGlobalLiveData.0.hospitalises|number_format }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre de Réa</h5>
+                    <p class="card-text">Nombre de personnes actuellement en réanimation</p>
+                    <div class="bg-warning w-75 rounded-pill mx-auto fw-bold fs-3">{{ datas.FranceGlobalLiveData.0.reanimation|number_format }}</div>                 
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre total de décès</h5>
+                    <p class="card-text">Nombre de personnes décédés depuis le début de la pandémie</p>
+                     <div class="bg-danger w-75 rounded-pill mx-auto fw-bold fs-3">{{ datas.FranceGlobalLiveData.0.deces|number_format }}</div>                 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title ">Nombre totale de guéris</h5>
+                    <p class="card-text">Nombre de personnes guéris depuis le début de la pandémie</p>
+                    <div class="bg-success w-75 rounded-pill mx-auto fw-bold fs-3">{{ datas.FranceGlobalLiveData.0.gueris|number_format }}</div>
+                </div>
+            </div>
+        </div>
+        {# <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mx-auto">Nombre de cas confirmés</h5>
+                    <p class="card-text">Nombre de cas confirmés depuis le début de la pandémie</p>
+                    <div class="bg-primary w-75 rounded-pill mx-auto fw-bold fs-3">{{ datas.FranceGlobalLiveData.0.casConfirmes|number_format }}</div>
+                </div>
+            </div>
+        </div> #}
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mx-auto">Source des données</h5>
+                    <p class="card-text badge bg-primary"><a href="https://www.data.gouv.fr/fr/organizations/opencovid19-fr/" class="text-white">{{ datas.FranceGlobalLiveData.0.sourceType }}</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <h1 id="department" class="text-center my-5">Les chiffres du COVID-19 par département</h1>
+    <div class="d-flex flex-row flex-wrap text-center">
+    {% for department in datasAllDep.allLiveFranceData %}
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">{{ department.nom }}</h5>
+                    <p class="card-text">Actuellement hospitalisés <span class="badge bg-primary">{{ department.hospitalises }}</span></p>
+                    <p class="card-text">Actuellement en Réa <span class="badge bg-primary">{{ department.reanimation }}</span></p>
+                    <a href="{{ path("app_department", {"department": department.nom}) }}" class="btn btn-secondary my-3">Plus de chiffres</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+      </div>
+{% endblock %}
